@@ -1,31 +1,39 @@
 "use client";
 
-import { useEffect, useState, ChangeEvent, KeyboardEvent } from "react";
-import { useInfoStore } from "@/store/useInfoStore";
+import {  useState, ChangeEvent } from "react";
+
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
-import { X } from "lucide-react";
+
+import { Trash2 } from "lucide-react";
+import toast from "react-hot-toast";
+import CustomTooltip from "./customTooltip";
+import useSkillStore from "@/store/useSkillStore";
+import IdGenerator from "@/utils/idGenerator";
+
+import { Skill } from "@/types/Skill";
 
 export default function SkillsTab() {
-  const { skills, setSkillsInfo } = useInfoStore();
-  const [hasHydrated, setHasHydrated] = useState(false);
+  const { skills, addSkill } = useSkillStore()
+ 
   const [newSkill, setNewSkill] = useState("");
 
-  useEffect(() => {
-    setHasHydrated(true);
-  }, []);
-
   const handleAddSkill = () => {
-    const trimmed = newSkill.trim();
-    if (trimmed && !skills.includes(trimmed)) {
-      setSkillsInfo(trimmed);
-      setNewSkill("");
+     const skillTrimmed = newSkill.trim();
+      if(skillTrimmed === '') return toast.error('Skill field cannot be empty')
+    const newSkillItem = {
+      id: IdGenerator(),
+      skill: skillTrimmed
     }
+
+    addSkill(newSkillItem)
+   
+
+   ;
+
+   
   };
 
-
-    if (!hasHydrated) return null;
 
   return (
     <div className="space-y-4 h-auto">
@@ -46,12 +54,30 @@ export default function SkillsTab() {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        {skills.map((skill, index) => (
-          <Badge key={index} variant="secondary" className="flex items-center gap-1 px-2 py-1">
-            {skill}
-          </Badge>
+        {skills.map((skill: Skill, index) => (
+            <CustomTooltip key={index} trigger={<SkillItem  skill={skill}/>} text="Delete skill"/>
         ))}
       </div>
     </div>
   );
 }
+
+const SkillItem = ({ skill }: {skill: Skill}) => {
+  const { removeSkill } = useSkillStore();
+
+  return (
+   
+    <div
+      onClick={() => removeSkill(skill.id)}
+      className="relative group cursor-pointer"
+    >
+      <div className="transition-all duration-200 bg-muted px-3 py-1 rounded text-sm font-medium text-muted-foreground group-hover:bg-red-500 group-hover:text-transparent">
+        {skill.skill}
+      </div>
+
+      <Trash2
+        className="absolute inset-0 m-auto h-4 w-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+      />
+    </div>
+  );
+};

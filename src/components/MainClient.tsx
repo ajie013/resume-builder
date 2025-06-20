@@ -1,6 +1,6 @@
 "use client";
 
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PersonalTab from "@/components/personal-tab";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,27 @@ import Navigation from "@/components/navigation";
 import SkillsTab from "@/components/skills-tab";
 
 export default function MainClient() {
+
+   
+
+    // const validatePersonalInfo = () =>{
+        
+    //     if(!personalInfo.name.trim()) return toast.error("Name is required");
+    //     if(!personalInfo.address.trim()) return toast.error("Address is required");
+    //     if(!personalInfo.phone.trim()) return toast.error("Phone number is required");
+    //     if(!personalInfo.email.trim()) return toast.error("Email is required");
+    //     if(!personalInfo.summary.trim()) return toast.error("Summary is required");
+    // };
+
+    //  const validateExperience = () =>{
+        
+      
+    // };
+
+    const generateResume = () =>{
+        // validatePersonalInfo();
+    }
+
   return (
     <ThemeProvider
       attribute="class"
@@ -18,6 +39,7 @@ export default function MainClient() {
       enableSystem
       disableTransitionOnChange
     >
+      <Toaster/>
       <div className="p-4 w-full min-h-screen flex justify-center items-center bg-white dark:bg-primary-background">
         <Navigation />
 
@@ -45,7 +67,7 @@ export default function MainClient() {
             <SkillsTab />
           </TabsContent>
 
-          <Button className="mx-auto block">Generate Resume</Button>
+          <Button onClick={generateResume} className="mx-auto block">Generate Resume</Button>
         </Tabs>
       </div>
 

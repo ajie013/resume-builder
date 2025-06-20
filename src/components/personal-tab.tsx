@@ -1,17 +1,18 @@
 'use client';
 
 import { Input } from '@/components/ui/input';
-import { useInfoStore } from '@/store/useInfoStore';
+
 import type { ChangeEvent } from 'react';
 import { Textarea } from './ui/textarea';
 import { Label } from '@radix-ui/react-dropdown-menu';
+import usePersonalStore from '@/store/usePersonalStore';
 
 export default function PersonalTab() {
-  const { personalInfo, setPersonalInfo } = useInfoStore();
+  const { personalInfo, updatePersonalInfo } = usePersonalStore();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setPersonalInfo({ [name]: value });
+    updatePersonalInfo({ [name]: value });
   };
 
   return (
