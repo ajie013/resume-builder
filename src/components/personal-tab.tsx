@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { useInfoStore } from '@/store/useInfoStore';
 import type { ChangeEvent } from 'react';
 import { Textarea } from './ui/textarea';
+import { Label } from '@radix-ui/react-dropdown-menu';
 
 export default function PersonalTab() {
   const { personalInfo, setPersonalInfo } = useInfoStore();
@@ -14,7 +15,8 @@ export default function PersonalTab() {
   };
 
   return (
-    <div className='space-y-1'>
+    <div className='space-y-2 h-auto'>
+      <h1 className='text-lg text-secondary-text dark:text-primary-text'>Personal Information</h1>
       <Input
         name="name"
         placeholder="Name"
@@ -39,7 +41,8 @@ export default function PersonalTab() {
         value={personalInfo.email}
         onChange={handleChange}
       />
-      <Textarea placeholder='Enter summary' name='summary' value={personalInfo.summary} onChange={handleChange}>{personalInfo.summary}</Textarea>
+      
+      <Textarea placeholder='Enter summary' name='summary' value={personalInfo.summary} onChange={handleChange}></Textarea>
     </div>
   );
 }
