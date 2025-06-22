@@ -9,6 +9,7 @@ interface ExperienceStore{
     experienceList: ExperienceInfo[]
     addExperience: (data: ExperienceInfo) => void
     updateExperience: (id: number,data: Partial<ExperienceInfo>) => void
+    deleteExperience: (id: number) => void
 }
 
 const useExperienceStore = create<ExperienceStore>((set) =>({
@@ -30,6 +31,10 @@ const useExperienceStore = create<ExperienceStore>((set) =>({
 
     updateExperience: (id, data) => set((state) => ({
         experienceList: state.experienceList.map((item) => id === item.id ? {...item, ...data} : item)
+    })),
+
+    deleteExperience: (id) => set((state) => ({
+        experienceList: state.experienceList.filter((item) => id !== item.id)
     }))
 }));
 

@@ -7,6 +7,7 @@ interface EducationStore{
 
     addEducation: (data: EducationInfo) => void
     updateEducation: (id:number, data: Partial<EducationInfo>) => void
+    deleteEducation: (id: number) => void
 }
 
 const useEducationStore = create<EducationStore>((set) => ({
@@ -26,8 +27,13 @@ const useEducationStore = create<EducationStore>((set) => ({
 
     updateEducation: (id, data) => set((state) =>({
         educationList: state.educationList.map((item) => id === item.id ? {...item, ...data} : item)
+    })),
+
+    deleteEducation: (id) => set((state) =>({
+        educationList: state.educationList.filter((item) => id !== item.id)
     }))
 
+    
 }));
 
 export default useEducationStore
